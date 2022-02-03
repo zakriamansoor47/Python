@@ -41,6 +41,6 @@ def textanimation(stringvalue, letters = 50, speed = 0.12, spaces = 20):
 
 
 user = input("Enter Something\n")
-system('clist1')
+system('cls')
 print("\n\n\n")
 textanimation(user, 50, 0.12, 35)
