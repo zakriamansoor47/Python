@@ -91,3 +91,64 @@ def realtime():
     hoursminsec = f"{hours:02d}:{mins:02d}:{seconds:02d}"
     return hoursminsec
 
+def hideString(number, showletters = 4, hiddenlettersymbol = "*"):
+    """This Function hide the letters of String. it can be use to hide password or credit card number. You can hide all or some letters of string
+    depend on you.
+    
+    Syntax: hideString(number --> String value, showletters --> int value(default = 4), hiddenlettersymbol --> string(Default = "*"))
+    To Hide All letters (useful for password) Change the value of second argument 'showletters' to '0'
+    To Change the Symbol of Hidden Letters change the value of third argument 'hiddenlettersymbol'"""
+    listofnumbers = list(number)
+    digits = ""
+    words = 0
+    newlist2 = []
+    for i in listofnumbers:
+        words += 1
+    if words-showletters >= 0:
+        for s in range(words-showletters,words):
+            newlist2.append(listofnumbers[s])
+        for e in newlist2:
+            digits += e
+    else:
+        print("Second Argument is Invaild!")
+    letters = words-showletters
+    hideletters = hiddenlettersymbol*letters
+    hidden = f"{hideletters}{digits}"
+    return hidden
+
+def encoder(message, list1, list2):
+    """The Function Encode a String. Change specific letters in string with another specific letters
+
+    s = "aeiou"
+            
+    l1 = ["a", "e", "i", "o", "u"]
+
+    l2 = ["@", "3", "!", "0", "#"]
+                encoded = encoder(s, l1, l2)
+                print(encoded)
+        Output:  @3!0#
+    Synatx: encoder(message --> string, list1 -->list, list2 -->list)"""
+    list0 = list(message)
+    word = ""
+    digit = 0
+    digit2 = 0
+    for s in list1:
+        digit += 1
+    for se in list2:
+        digit2 += 1
+    num = digit-1
+    if digit == digit2:
+        for e in list0:
+            if e in list1:
+                while(True):
+                    if e == list1[num]:
+                        word += list2[num]
+                    num -=1
+                    if num < 0:
+                        num = digit-1
+                        break
+            else:
+                word += e
+        return word
+    else:
+        print("Encoding Error: Number of Items of 2nd and 3rd Arguments are not matched")
