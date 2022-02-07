@@ -62,7 +62,7 @@ def winningconditions():
         elif user1char == "X":
             winner = "user"
     # After that we check 'O' in every row of any Column
-    elif "O" in board[0][0] and "O" in board[1][0] and "O" in board[2][0] or "O" in board[0][0] and "O" in board[1][1] and "O" in board[2][1] or "O" in board[0][2] and "O" in board[1][2] and "O" in board[2][2]:
+    elif "O" in board[0][0] and "O" in board[1][0] and "O" in board[2][0] or "O" in board[0][1] and "O" in board[1][1] and "O" in board[2][1] or "O" in board[0][2] and "O" in board[1][2] and "O" in board[2][2]:
         if cpuchar == "O":
             winner = "cpu"
         elif user2char == "O":
