@@ -1,16 +1,18 @@
+from audioop import reverse
 import datetime
+import time
 from pygame import mixer
 
 timeinmins = datetime.datetime.now().strftime("%M")
 timeinhours = datetime.datetime.now().strftime("%H")
 timeinsec = datetime.datetime.now().strftime("%S")
-def intvalue(min, max):
+def intvalue(min = 0, max = 9,text = ""):
     """Get a INT value Input and check if entered input is not less then or greater then the min or max value OR entered input is not interger.
     if input valued is interger and greater or less then the min or max value then give a error and ask to enter value again. if the entered
     input is not greater or less then the max or min value then return(int) the input value"""
     while(True):
         try:
-            value = int(input())
+            value = int(input(text))
             if value < min:
                 print("Wrong Input! Please Enter a Vaild Number")
                 continue
@@ -22,14 +24,13 @@ def intvalue(min, max):
         except:
             print("Wrong Input! Please Enter a Integer Value")
             continue
-
-def floatvalue(min, max):
+def floatvalue(min =0.0, max = 1.0,text=""):
     """Get a FLOAT value Input and check if entered input is not less then or greater then the min or max value OR entered input is not float.
     if input valued is float and greater or less then the min or max value then give a error and ask to enter value again. if the entered
     input is not greater or less then the max or min value then return(float) the input value"""
     while(True):
         try:
-            value = float(input())
+            value = float(input(text))
             if value < min:
                 print("Wrong Input! Please Enter a Vaild Number")
                 continue
@@ -42,11 +43,11 @@ def floatvalue(min, max):
             print("Wrong Input! Please Enter a Float Value")
             continue
 
-def stringvalue(value):
+def stringchecker(value,text = ""):
     """Get the STRING input from user and check the entered input is in 'value' which maybe string or list"""
     while(True):
         try:
-            user = input()
+            user = input(text)
             if user == "":
                 print("Wrong Input! You Pressed Enter Please Type Any Value")
                 continue
@@ -60,7 +61,6 @@ def stringvalue(value):
         except:
             print("Wrong Input! Your Entered Value is NOT Found!")
             continue
-
 def playmusic(filename, loop = 1, volume = 1.0):
     """playmusic(filename => string, loop => int (default value: 1), volume (default value: 1.0)=> float)
     
@@ -130,12 +130,8 @@ def encoder(message, list1, list2):
     Synatx: encoder(message --> string, list1 -->list, list2 -->list)"""
     list0 = list(message)
     word = ""
-    digit = 0
-    digit2 = 0
-    for s in list1:
-        digit += 1
-    for se in list2:
-        digit2 += 1
+    digit = len(list1)
+    digit2 = len(list2)
     num = digit-1
     if digit == digit2:
         for e in list0:
@@ -152,8 +148,7 @@ def encoder(message, list1, list2):
         return word
     else:
         print("Encoding Error: Number of Items of 2nd and 3rd Arguments are not matched")
-        
-        
+
 def textanimation(stringvalue, letters = 50, speed = 0.12, spaces = 20):
     """Print Animation of Enetered Text
 
@@ -193,6 +188,3 @@ def textanimation(stringvalue, letters = 50, speed = 0.12, spaces = 20):
             word2 = 0
         elif word >= word3: # Check if the letters of list2 >= letters of User Text
             word =0
-
-            
-            
