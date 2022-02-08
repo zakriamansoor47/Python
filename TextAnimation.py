@@ -18,7 +18,6 @@ def textanimation(stringvalue, letters = 50, speed = 0.12, spaces = 20):
     word2 = 0
     word3 = len(list1)
     text = "" # empty string
-    # Now we will Count how much letters in User Text
     while(True):
         if word < word3:
             list2.append(list1[word])
