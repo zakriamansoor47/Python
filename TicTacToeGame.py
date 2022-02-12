@@ -37,38 +37,46 @@ def showboard():
 
 def winningconditions():
     global board,characters,cpuchar,user1char, winner, user2char
-    # first check 'X' in every coloumn of any Row
-    if "X" in board[0][0] and "X" in board[0][1] and "X" in board[0][2] or "X" in board[1][0] and "X" in board[1][1] and "X" in board[1][2] or "X" in board[2][0] and "X" in board[2][1] and "X" in board[2][2]:
-        if cpuchar == "X":
-            winner = "cpu"
-        elif user2char == "X":
-            winner = "user2"
-        elif user1char == "X":
-            winner = "user"
-    # then check 'O' in every coloumn of any Row
-    elif "O" in board[0][0] and "O" in board[0][1] and "O" in board[0][2] or "O" in board[1][0] and "O" in board[1][1] and "O" in board[1][2] or "O" in board[2][0] and "O" in board[2][1] and "O" in board[2][2]:
-        if cpuchar == "O":
-            winner = "cpu"
-        elif user2char == "O":
-            winner = "user2"
-        elif user1char == "O": 
-            winner = "user"
-    # After that we check 'X' in every row of any Column
-    elif "X" in board[0][0] and "X" in board[1][0] and "X" in board[2][0] or "X" in board[0][1] and "X" in board[1][1] and "X" in board[2][1] or "X" in board[0][2] and "X" in board[1][2] and "X" in board[2][2]:
-        if cpuchar == "X":
-            winner = "cpu"
-        elif user2char == "X":
-            winner = "user2"
-        elif user1char == "X":
-            winner = "user"
-    # After that we check 'O' in every row of any Column
-    elif "O" in board[0][0] and "O" in board[1][0] and "O" in board[2][0] or "O" in board[0][1] and "O" in board[1][1] and "O" in board[2][1] or "O" in board[0][2] and "O" in board[1][2] and "O" in board[2][2]:
-        if cpuchar == "O":
-            winner = "cpu"
-        elif user2char == "O":
-            winner = "user2"
-        elif user1char == "O":
-            winner = "user"
+     list1 = numpy.array(board)
+    # first check 'X' or 'O' in every coloumn of any Row
+    word2 = 0
+    for _ in board:
+        word2 +=1
+        cpuword,user1word,user2word = 0,0,0
+        for s in board[word2-1]:
+            if s == cpuchar:
+                cpuword += 1
+                if cpuword == 3:
+                    cpuword = 0
+                    winner = "cpu"
+            elif s == user1char:
+                user1word += 1
+                if user1word == 3:
+                    user1word = 0
+                    winner = "user"
+            elif s == user2char:
+                user2word += 1
+                if user2word == 3:
+                    user2word = 0
+                    winner = "user2"
+        # After that we check 'X' or 'O' in every row of any Column
+        cpuword,user1word,user2word = 0,0,0
+        for l in list(list1[:,word2-1]):
+            if l == cpuchar:
+                cpuword +=1
+                if cpuword == 3:
+                    cpuword =0
+                    winner = "cpu"
+            elif l == user1char:
+                user1word += 1
+                if user1word == 3:
+                    user1word = 0
+                    winner = "user"
+            elif l == user2char:
+                user2word += 1
+                if user2word == 3:
+                    user2word = 0
+                    winner = "user2"
     # board = [                         board = [
     # ["X", " ", " "],                 [" ", " ", "X"],
     # [" ", "X", " "],     or          [" ", "X", " "],
