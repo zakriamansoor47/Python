@@ -32,12 +32,9 @@ def showboard():
     print("   -----------")
     print(f"3:  {board[2][0]} | {board[2][1]} | {board[2][2]} ")
 
-
-
-
 def winningconditions():
     global board,characters,cpuchar,user1char, winner, user2char
-     list1 = numpy.array(board)
+    list1 = numpy.array(board)
     # first check 'X' or 'O' in every coloumn of any Row
     word2 = 0
     for _ in board:
@@ -83,7 +80,7 @@ def winningconditions():
     # [" ", " ", "X",]                 ["X", " ", " ",]
     # ]                                 ]
     # After that we check 'X' in multiply case
-    elif "X" in board[0][0] and "X" in board[1][1] and "X" in board[2][2] or "X" in board[2][0] and "X" in board[1][1] and "X" in board[0][2]:
+    if "X" in board[0][0] and "X" in board[1][1] and "X" in board[2][2] or "X" in board[2][0] and "X" in board[1][1] and "X" in board[0][2]:
         if cpuchar == "X":
             winner = "cpu"
         elif user2char == "X":
@@ -99,7 +96,7 @@ def winningconditions():
         elif user1char == "O":
             winner = "user"
     else: return False
-
+    
 def cpuAI():
     global board, user1char,cpuchar, cpuchoice,address
     list1 = numpy.array(board)
@@ -202,7 +199,8 @@ def DoublePlayer():
     global user1char, user2char,turn, firstturn,cpuchar
     cpuchar = ""
     system("cls")
-    print("----------------------\nPlayer '1' Choose Your Character\n----------------------\n1: X\n2: O")
+    opmodule.dprint("|--->  Player '1' Choose Your Character  <---|")
+    print("1: X\n2: O")
     user1char = opmodule.intvalue(1,2,"P1: ")
     if user1char == 1:
         user1char = "X"
@@ -216,8 +214,8 @@ def SinglePlayer():
     global user1char, cpuchar,turn, firstturn, user2char
     user2char = ""
     system("cls")
-    print("----------------------\nChoose Your Character\n----------------------\n1: X\n2: O")
-    user1char = opmodule.intvalue(1,2)
+    opmodule.dprint("|--->  Choose Your Character  <---|")
+    user1char = opmodule.intvalue(1,opmodule.printinlist("X;O"))
     if user1char == 1:
         user1char = "X"
         cpuchar = "O"
@@ -326,9 +324,7 @@ def winscores():
         winner1 = "Computer"
     else:
         winner1 = "NO ONE"
-    print("------------------------------------------------")
-    print("|---------->      Scores Sheet      <----------|")
-    print("------------------------------------------------")
+    opmodule.dprint("|---------->      Scores Sheet      <----------|")
     print(f"                  Your Wins: {int(userscores)}\n                 Computer Wins: {int(cpuscores)}")
     print(f"                 Winner: {winner1}")
     print("------------------------------------------------")
@@ -345,8 +341,8 @@ def winscores():
 
 def Game():
     global gamem
-    print("--------------------\n| Choose Game Mode |\n--------------------\n\n1: Single Player\n2: Double Player\n\n0: Back")
-    gamemode = opmodule.intvalue(0,2)
+    opmodule.dprint("|--->  Choose Game Mode  <---|")
+    gamemode = opmodule.intvalue(0,opmodule.printinlist("Back;Single Player;Double Players",0))
     if gamemode == 2:
         gamem = "double"
         DoublePlayer()
@@ -358,9 +354,7 @@ def Game():
 
 def help():
     system("cls")
-    print("----------------------------------------")
-    print("|---------->      Help      <----------|")
-    print("----------------------------------------\n")
+    opmodule.dprint("|---------->      Help      <----------|")
     print("There are 3 Columns and 3 Rows in Game.\nColumns are A, B, C\nRows are 1, 2, 3\n")
     print("You Need to put Input Like this 'A2'")
     print("Where 'A' is Column and '2' is Row")
@@ -371,11 +365,8 @@ def help():
 
 def mainmenu():
     system("cls")
-    print("---------------------------------------")
-    print("|     Welcome to Tic Tac Toe Game     |")
-    print("---------------------------------------\n")
-    print("1: Play Game\n2: Scores\n3: How to Play Game\n4: Exit")
-    user1 = opmodule.intvalue(1,4)
+    opmodule.dprint("|     Welcome to Tic Tac Toe Game     |")
+    user1 = opmodule.intvalue(1, opmodule.printinlist("Play Game;Scores;How to Play Game;Exit"))
     if user1 == 1:
         system("cls")
         Game()
@@ -386,9 +377,7 @@ def mainmenu():
         help()
     elif user1 == 4:
         system("cls")
-        print("------------------------------------------------------")
-        print("Do you really want to Exit the Game? 1 = Yes, 0 = No")
-        print("------------------------------------------------------")
+        opmodule.dprint("Do you really want to Exit the Game? 1 = Yes, 0 = No")
         user2 = opmodule.intvalue(0, 1)
         if user2 == 1:
             system("cls")
@@ -397,5 +386,3 @@ def mainmenu():
             mainmenu()
         
 mainmenu()
-
-
