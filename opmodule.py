@@ -166,25 +166,55 @@ def textanimation(stringvalue, letters = 50, speed = 0.12, spaces = 20):
     # Created 3 integers
     word = 0
     word2 = 0
-    word3 = 0
+    word3 = len(list1)
     text = "" # empty string
     # Now we will Count how much letters in User Text
-    for dl in list1:
-        word3 +=1
     while(True):
         if word < word3:
             list2.append(list1[word])
             word +=1 
-            for i in list2: # Counting how much letters in Second List
-                word2 +=1
+            word2 = len(list2) #counting the letters in list2
             if word2 >=letters: # check if the letters in Second list is >= 2nd argument of function
                 lol = list2[-letters:] # Removeing frist letter from list
                 time.sleep(speed) # Speed of moving of text
                 for let in lol: # converting list into string and print it
                     text += let
-                    print(f"----------------------------------------|{text}|----------------------------------------", end="\r")
+                    print(f"|{text}|", end="\r")
                 else: # when the letters in list ends we will set the value of text to empty string
                     text =""
             word2 = 0
         elif word >= word3: # Check if the letters of list2 >= letters of User Text
             word =0
+
+def design(func):
+    def inner(msg):
+        print("-" *len(msg))
+        func(msg)
+        print("-" *len(msg))
+    return inner
+@design
+def dprint(msg):
+    print(f"{msg}")
+
+def printinlist(msg,start=1,split=";"):
+    """This Function print your string in list with serial Numbers and return the last item number
+    
+    for example: 
+        printinlist("Play Game;Scores;Exit")
+    Output: 1: Play Game
+            2: Scores
+            3: Exit
+    1=msg is the string value or text on which the Function Applied
+
+    2=start it is the starting number of the list like if satrt=0 then list will start from 0 then 1,2,3
+
+    3=split it is the symbol which is used to add next item
+
+    Synatx: printinlist(msg --> string,start--> int(default value: 1) ,split --> string(default value: ";"))"""
+    s = ""
+    word = start
+    for i in msg.split(split):
+        s += f"{word}: {i}\n"
+        word +=1
+    print(s)
+    return word-1
