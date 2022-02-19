@@ -212,14 +212,17 @@ def printinlist(msg,start=1,split=";"):
     for i in msg.split(split):
         s += f"{word}: {i}\n"
         word +=1
-    print(s)
+    print(s.rstrip(s[-1]))
     return word-1
+
+
 def design(func):
     def inner(msg):
         print("-" *len(msg))
         func(msg)
         print("-" *len(msg))
     return inner
+    
 @design
 def dprint(msg):
     print(f"{msg}")
