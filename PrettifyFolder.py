@@ -335,30 +335,18 @@ def settings():
         avoidextensions()   
 
 #-------------------------------------------------------------
-# Help Menu
-#-------------------------------------------------------------      
-
-def Help():
-    os.system("cls")
-    opmodule.dprint("|-----> Help <-----|")
-    user4 =  opmodule.intvalue(0,opmodule.printinlist("Back",0))
-    if user4 == 0: mainmenu()
-
-#-------------------------------------------------------------
 # Main Menu
 #-------------------------------------------------------------
 
 def mainmenu():
     os.system("cls")
     opmodule.dprint("|---> Folder Prettifyer by Zakria <---|")
-    user = opmodule.intvalue(1, opmodule.printinlist("Start Prettifying;Settings;Help;Exit"))
+    user = opmodule.intvalue(1, opmodule.printinlist("Start Prettifying;Settings;Exit"))
     if user == 1:
         Prettifyer()
     elif user == 2:
         settings()
     elif user == 3:
-        Help()
-    elif user == 4:
         os.system("cls")
         opmodule.dprint("Do you really want to Exit the Program? 1= Yes, 0= No")
         user1 =  opmodule.intvalue(0,1)
