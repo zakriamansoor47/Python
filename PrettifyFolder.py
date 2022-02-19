@@ -1,9 +1,21 @@
+#-------------------------------------------------------------
+# Importing Modules
+#-------------------------------------------------------------
+
 import os
 import opmodule
 
-avoidfilepath = "D:\Zakria Work\Python\zakria.txt"
+#-------------------------------------------------------------
+# Global Veriables
+#-------------------------------------------------------------
+
+avoidfilepath = "D:\Zakria Work\Python\\avoidfiles.txt"
 #avoidextspath = "No Path Given"
-avoidextspath = "D:\Zakria Work\Python\exts.txt"
+avoidextspath = "D:\Zakria Work\Python\\avoidexts.txt"
+
+#-------------------------------------------------------------
+# File Reading Function
+#-------------------------------------------------------------
 
 def filereader(path):
     w = open(path, "r")
@@ -11,120 +23,213 @@ def filereader(path):
     w.close()
     return list1
 
-def solider(path, file, foramt):
-    with open(file, "r") as w:
-        list1 = w.read().splitlines()
-        w.close()
-    if os.path.exists(path) == True:
-        os.chdir(path)
-        word = 1
-        word1 = 1
-        for s in os.walk(os.getcwd()):
-            for l in s[2]:
-                fort = l.split(".")
-                if l in list1: # if file exists in files list
-                    continue # Do nothing with that file
-                elif fort[-1] == foramt:
-                    try:
-                        if os.path.exists(f"{word}.{foramt}") == True:
-                            word1=1
-                            while(word1 != word):
-                                try:
-                                    os.rename(l, f"{word}.{foramt}")
-                                except: word1 +=1
-                            print(f"file exists: {word}.{foramt}")
-                        else: 
-                            print("i am here")
-                            os.rename(l, f"{word}.{foramt}")
-                    finally: word +=1
-                else:
-                    os.rename(l, l.capitalize())
-    else: print("Your Entered Path is not Exists")
+#-------------------------------------------------------------
+# Entered Extension Check
+#-------------------------------------------------------------
+
+def extschecker(text):
+    while True:
+        try:
+            text1 = input(text)
+            if text1.islower() == True and "." not in text1:
+                return text1
+        except:continue
     
+#-------------------------------------------------------------
+# Confirming Message Function
+#-------------------------------------------------------------
+
+def doYou(name):
+    os.system("cls")
+    opmodule.dprint(f"Do you really want to {name}? 1 = Yes, 0 = No")
+    user = opmodule.intvalue(0,1)
+    return user
+
+#-------------------------------------------------------------
+# Capitalize Files Name Function
+#-------------------------------------------------------------
+
 def capitalize():
     global avoidfilepath,avoidextspath
-    Fileslist = filereader(avoidfilepath)
-    Extslist = filereader(avoidextspath)
-    for s in os.walk(os.getcwd()):
-            for l in s[2]:
+    userinput = doYou("Capitalize Files Name")
+    if userinput == 0: Prettifyer()
+    else: 
+        Fileslist = filereader(avoidfilepath)
+        Extslist = filereader(avoidextspath)
+        for s in os.walk(os.getcwd()):
+            for l in sorted(s[2],key=len):
                 fort = l.split(".")
                 if l not in Fileslist and fort[-1] not in Extslist:
                     os.rename(l,f"{l[0].capitalize()+l[1:]}")
-    else:
-        os.system("cls") 
-        opmodule.dprint("All Files Name are now Capitalized!")
-    user1 =  opmodule.intvalue(0,opmodule.printinlist("Back",0))
-    if user1 == 0: Prettifyer()
-    
-def UpperCase():
-    global avoidfilepath,avoidextspath
-    Fileslist = filereader(avoidfilepath)
-    Extslist = filereader(avoidextspath)
-    for s in os.walk(os.getcwd()):
-            for l in s[2]:
-                fort = l.split(".")
-                if l not in Fileslist and fort[-1] not in Extslist:
-                    os.rename(l,l.upper())
-    else:
-        os.system("cls") 
-        opmodule.dprint("All Files Name are now UPPER Case!")
-    user1 =  opmodule.intvalue(0,opmodule.printinlist("Back",0))
-    if user1 == 0: Prettifyer()
-
-def LowerCase():
-    global avoidfilepath,avoidextspath
-    Fileslist = filereader(avoidfilepath)
-    Extslist = filereader(avoidextspath)
-    for s in os.walk(os.getcwd()):
-            for l in s[2]:
-                fort = l.split(".")
-                if l not in Fileslist and fort[-1] not in Extslist:
-                    os.rename(l,l.lower())
-    else:
-        os.system("cls") 
-        opmodule.dprint("All Files Name are now Lower Case!")
-    user1 =  opmodule.intvalue(0,opmodule.printinlist("Back",0))
-    if user1 == 0: Prettifyer()
-
-def ChangeFileExts():
-    global avoidfilepath,avoidextspath
-    Fileslist = filereader(avoidfilepath)
-    Extslist = filereader(avoidextspath)
-    os.system("cls")
-    opmodule.dprint("|---> Change Files Extensions <---|")
-    user2 =  opmodule.intvalue(0,opmodule.printinlist("Back;Change File Extension",0))
-    if user2 == 0: Prettifyer()
-    else:
-        exts1= input("Enter the name of Extension (without dot'.') which you want to Change:\n")
-        exts2 = input("Enter the name of Extension (without dot'.') which you want to Apply:\n")
-        for s in os.walk(os.getcwd()):
-                for l in s[2]:
-                    fort = l.split(".")
-                    word =""
-                    for i in fort[:-1]:
-                        word +=i+'.'
-                    if l not in Fileslist and fort[-1] == exts1:
-                        os.rename(l,f"{word.rstrip(word[-1])+'.'+exts2}")
         else:
             os.system("cls") 
-            opmodule.dprint("Extensions of All Files are Now Changed!")
+            opmodule.dprint("All Files Name are now Capitalized!")
         user1 =  opmodule.intvalue(0,opmodule.printinlist("Back",0))
         if user1 == 0: Prettifyer()
 
-def number():
+#-------------------------------------------------------------
+# Change Files Name to UpperCase Function
+#-------------------------------------------------------------
+
+def UpperCase():
     global avoidfilepath,avoidextspath
-    pass
+    userinput = doYou("Upper Case Files Name")
+    if userinput == 0: Prettifyer()
+    else: 
+        Fileslist = filereader(avoidfilepath)
+        Extslist = filereader(avoidextspath)
+        for s in os.walk(os.getcwd()):
+            for l in sorted(s[2],key=len):
+                fort = l.split(".")
+                word =""
+                for i in fort[:-1]:
+                    word +=i
+                if l not in Fileslist and fort[-1] not in Extslist:
+                    os.rename(l,f"{word.upper()+'.'+fort[-1]}")
+        else:
+            os.system("cls") 
+            opmodule.dprint("All Files Name are now UPPER Case!")
+        user1 =  opmodule.intvalue(0,opmodule.printinlist("Back",0))
+        if user1 == 0: Prettifyer()
+
+#-------------------------------------------------------------
+# Change Files Name to LowerCase Funtion
+#-------------------------------------------------------------
+
+def LowerCase():
+    userinput = doYou("Lower Case Files Name")
+    if userinput == 0: Prettifyer()
+    else: 
+        global avoidfilepath,avoidextspath
+        Fileslist = filereader(avoidfilepath)
+        Extslist = filereader(avoidextspath)
+        for s in os.walk(os.getcwd()):
+            for l in sorted(s[2],key=len):
+                fort = l.split(".")
+                if l not in Fileslist and fort[-1] not in Extslist:
+                    os.rename(l,l.lower())
+        else:
+            os.system("cls") 
+            opmodule.dprint("All Files Name are now Lower Case!")
+        user1 =  opmodule.intvalue(0,opmodule.printinlist("Back",0))
+        if user1 == 0: Prettifyer()
+
+#-------------------------------------------------------------
+# Change File Extensions Function
+#-------------------------------------------------------------
+
+def ChangeFileExts():
+    userinput = doYou("Change Files Extensions")
+    if userinput == 0: Prettifyer()
+    else: 
+        global avoidfilepath
+        Fileslist = filereader(avoidfilepath)
+        os.system("cls")
+        opmodule.dprint("|---> Change Files Extensions <---|")
+
+        exts1= extschecker("Enter the name of Extension (without dot'.') which you want to Change:\n")
+        exts2 = extschecker("Enter the name of Extension (without dot'.') which you want to Apply:\n")
+        for s in os.walk(os.getcwd()):
+            for l in sorted(s[2],key=len):
+                fort = l.split(".")
+                if l not in Fileslist and fort[-1] == exts1:
+                    word =""
+                    for i in fort[:-1]:
+                        word +=i+'.'
+                    os.rename(l,f"{word.rstrip(word[-1])+'.'+exts2}")
+        else:
+            os.system("cls") 
+            opmodule.dprint(f"All Files of this ({exts1}) Extension are Changed to this ({exts2}) Extension!")
+        user1 =  opmodule.intvalue(0,opmodule.printinlist("Back",0))
+        if user1 == 0: Prettifyer()
+
+#-------------------------------------------------------------
+# Sort Files by Numbers Function
+#-------------------------------------------------------------
+
+def number():
+    userinput = doYou("Sort Files by Numbers")
+    if userinput == 0: Prettifyer()
+    else: 
+        global avoidfilepath
+        Fileslist = filereader(avoidfilepath)
+        os.system("cls")
+        opmodule.dprint("|--->  Sort Files by Numbers  <---|")
+        exts1= extschecker("Enter the name of Extension (without dot'.') which you want to Sort by Numbers:\n")
+        word = 1
+        word2 = 1
+        while True: # Check is there any files are sorted with number 
+            if os.path.exists(f"{word}.{exts1}") == True: word +=1 # if sorted files exists count them
+            else: break # End the loop after counting all sorted files
+        for s in os.walk(os.getcwd()):
+            for l in sorted(s[2],key=len):
+                fort = l.split(".")
+                if l not in Fileslist and fort[-1] == exts1:
+                    word2 +=1
+                    if word2 <= word:
+                        continue # Skip the File
+                    try:
+                        os.rename(l, f"{word}.{exts1}")
+                    finally: word +=1
+        else:
+            os.system("cls") 
+            opmodule.dprint(f"All Files of ({exts1}) Extension are now Sorted by Numbers!")
+            user1 =  opmodule.intvalue(0,opmodule.printinlist("Back",0))
+            if user1 == 0: Prettifyer()
+
+#-------------------------------------------------------------
+# Add Text in Files Name Function
+#-------------------------------------------------------------
+
+def AddText():
+    userinput = doYou("Add Text in Files Name")
+    if userinput == 0: Prettifyer()
+    else: 
+        global avoidfilepath
+        Fileslist = filereader(avoidfilepath)
+        os.system("cls")
+        opmodule.dprint("|---> Add Text in Files Name <---|")
+        exts1 = extschecker("Enter the name of Files Extension (without dot'.') in which you want to add Text:\n")
+        text = input("Enter the Text which You want to Add in the Files Name:\n")
+        print("What will be the Text Position?\n")
+        position1 = opmodule.intvalue(1,opmodule.printinlist("In Start;In End"))
+        for s in os.walk(os.getcwd()):
+            for l in sorted(s[2],key=len):
+                fort = l.split(".")
+                if l not in Fileslist and fort[-1] == exts1:
+                    word =""
+                    for i in fort[:-1]:
+                        word +=i+'.'
+                    if position1 == 1: os.rename(l, f"{text}{word.rstrip(word[-1])}.{exts1}")
+                    if position1 == 2: os.rename(l, f"{word.rstrip(word[-1])}{text}.{exts1}")
+        else:
+            os.system("cls") 
+            opmodule.dprint(f"Your Entered Text is Added in All Files Name of this ({exts1}) Extension")
+            user1 =  opmodule.intvalue(0,opmodule.printinlist("Back",0))
+            if user1 == 0: Prettifyer()
+
+#-------------------------------------------------------------
+# Folder Prettifying Functions Menu
+#-------------------------------------------------------------
 
 def Prettifyer():
     os.system("cls")
-    opmodule.dprint("|----->  Select Mode  <-----|")
-    user = opmodule.intvalue(0, opmodule.printinlist("Back;Capitalize File Name;Upper Case File Name;lower Case File Name;Change Files Extension;Number",0))
+    opmodule.dprint("|----->  Select Function  <-----|")
+    print(f"Note: Your Current Working Folder is: {os.getcwd()}")
+    print("All These Funcitons are Applied only in this Folder!\n")
+    user = opmodule.intvalue(0, opmodule.printinlist("Back;Capitalize Files Name;Upper Case Files Name;lower Case Files Name;"
+    "Change Files Extension;Sort Files by Numbers;Add Text in File Name",0))
     if user == 0: mainmenu()
     elif user ==1: capitalize()
     elif user == 2: UpperCase()
     elif user == 3: LowerCase()
     elif user == 4: ChangeFileExts()
     elif user ==5: number()
+    elif user == 6: AddText()
+
+#-------------------------------------------------------------
+# Change Working Folder Function
+#-------------------------------------------------------------
 
 def chagnepath():
     os.system("cls")
@@ -141,6 +246,10 @@ def chagnepath():
         else: opmodule.dprint("Your Entered Path is not Exits!")
         user1 =  opmodule.intvalue(0,opmodule.printinlist("Back",0))
         if user1 == 0: chagnepath()
+
+#-------------------------------------------------------------
+# Change 'Avoid Files List' File Path Funciton
+#-------------------------------------------------------------
 
 def avoidfiles():
     global avoidfilepath
@@ -173,6 +282,10 @@ def avoidfiles():
             user1 =  opmodule.intvalue(0,opmodule.printinlist("Back",0))
             if user1 == 0: avoidfiles()
 
+#-------------------------------------------------------------
+# Change 'Avoid Extensions List' File Path Funciton
+#-------------------------------------------------------------
+
 def avoidextensions():
     global avoidextspath
     os.system("cls")
@@ -204,6 +317,10 @@ def avoidextensions():
             user1 =  opmodule.intvalue(0,opmodule.printinlist("Back",0))
             if user1 == 0: avoidextensions()
 
+#-------------------------------------------------------------
+# Settings Menu
+#-------------------------------------------------------------
+
 def settings():
     os.system("cls")
     opmodule.dprint("|----->  Settigns  <-----|")
@@ -216,13 +333,20 @@ def settings():
         avoidfiles()
     elif user ==3:
         avoidextensions()   
-        
+
+#-------------------------------------------------------------
+# Help Menu
+#-------------------------------------------------------------      
 
 def Help():
     os.system("cls")
     opmodule.dprint("|-----> Help <-----|")
     user4 =  opmodule.intvalue(0,opmodule.printinlist("Back",0))
     if user4 == 0: mainmenu()
+
+#-------------------------------------------------------------
+# Main Menu
+#-------------------------------------------------------------
 
 def mainmenu():
     os.system("cls")
