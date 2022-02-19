@@ -1,10 +1,3 @@
-import datetime
-import time
-
-
-timeinmins = datetime.datetime.now().strftime("%M")
-timeinhours = datetime.datetime.now().strftime("%H")
-timeinsec = datetime.datetime.now().strftime("%S")
 def intvalue(min = 0, max = 9,text = ""):
     """Get a INT value Input and check if entered input is not less then or greater then the min or max value OR entered input is not interger.
     if input valued is interger and greater or less then the min or max value then give a error and ask to enter value again. if the entered
@@ -61,7 +54,6 @@ def stringchecker(value,text = ""):
             print("Wrong Input! Your Entered Value is NOT Found!")
             continue
 def playmusic(filename, loop = 1, volume = 1.0):
-    
     """playmusic(filename => string, loop => int (default value: 1), volume (default value: 1.0)=> float)
     
     Play Music like this: playmusic("your.mp3", 2, 0.8)"""
@@ -87,6 +79,7 @@ def realtime():
     """return the current TIME
     
     TIME format is 13:23:52"""
+    import datetime
     seconds = int( datetime.datetime.now().strftime("%S"))
     mins = int(datetime.datetime.now().strftime("%M"))
     hours = int(datetime.datetime.now().strftime("%H"))
@@ -162,6 +155,7 @@ def textanimation(stringvalue, letters = 50, speed = 0.12, spaces = 20):
 
     4=spaces. it is the size of spaces after the text string ends. (must be integer)
     Synatx: textanimation(stringvalue --> string, letters -->int, speed -->float, spaces -->int)"""
+    import time
     space = " "*spaces 
     list1 = list(space+stringvalue) # Convert Spaces+User text(string value) into list
     list2 = [] # created a empty list
@@ -207,16 +201,28 @@ def printinlist(msg,start=1,split=";"):
             2: Scores
             3: Exit
     1=msg is the string value or text on which the Function Applied
+
     2=start it is the starting number of the list like if satrt=0 then list will start from 0 then 1,2,3
+
     3=split it is the symbol which is used to add next item
+
     Synatx: printinlist(msg --> string,start--> int(default value: 1) ,split --> string(default value: ";"))"""
     s = ""
     word = start
     for i in msg.split(split):
         s += f"{word}: {i}\n"
         word +=1
-    print(s.rstrip(s[-1]))
+    print(s)
     return word-1
+def design(func):
+    def inner(msg):
+        print("-" *len(msg))
+        func(msg)
+        print("-" *len(msg))
+    return inner
+@design
+def dprint(msg):
+    print(f"{msg}")
 
 def listintostring(yourlist,end=" "):
     """This Function converts your list into string and return the converted string
@@ -231,4 +237,3 @@ def listintostring(yourlist,end=" "):
     for i in yourlist:
         string1 += f"{i}{end}"
     return string1.rstrip(string1[-len(end)])
-
