@@ -1,7 +1,6 @@
-from audioop import reverse
 import datetime
 import time
-from pygame import mixer
+
 
 timeinmins = datetime.datetime.now().strftime("%M")
 timeinhours = datetime.datetime.now().strftime("%H")
@@ -62,9 +61,11 @@ def stringchecker(value,text = ""):
             print("Wrong Input! Your Entered Value is NOT Found!")
             continue
 def playmusic(filename, loop = 1, volume = 1.0):
+    
     """playmusic(filename => string, loop => int (default value: 1), volume (default value: 1.0)=> float)
     
     Play Music like this: playmusic("your.mp3", 2, 0.8)"""
+    from pygame import mixer
     mixer.init()
     mixer.music.load(filename)
     mixer.music.set_volume(float(volume))
@@ -75,6 +76,7 @@ def stopmusic(unload = 0):
     
     STOP or STOP+UNLOAD the current playing MUSIC
     syntax: stopmusic() or stopmusic(1)"""
+    from pygame import mixer
     if int(unload) == 1:
         mixer.music.stop()
         mixer.music.unload()
@@ -205,16 +207,28 @@ def printinlist(msg,start=1,split=";"):
             2: Scores
             3: Exit
     1=msg is the string value or text on which the Function Applied
-
     2=start it is the starting number of the list like if satrt=0 then list will start from 0 then 1,2,3
-
     3=split it is the symbol which is used to add next item
-
     Synatx: printinlist(msg --> string,start--> int(default value: 1) ,split --> string(default value: ";"))"""
     s = ""
     word = start
     for i in msg.split(split):
         s += f"{word}: {i}\n"
         word +=1
-    print(s)
+    print(s.rstrip(s[-1]))
     return word-1
+
+def listintostring(yourlist,end=" "):
+    """This Function converts your list into string and return the converted string
+    
+    for example: 
+        listintostring(["Hello","World"]," - ")
+    Output: Hello - World
+    1=yourlist - it is the list given by you on which the Function Applied
+    2=end - it is the ending word written every time when one item of list is printed
+    Synatx: listintostring(yourlist --> list,end--> string(default value: ";"))"""
+    string1 = ""
+    for i in yourlist:
+        string1 += f"{i}{end}"
+    return string1.rstrip(string1[-len(end)])
+
