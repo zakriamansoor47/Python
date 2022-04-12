@@ -240,3 +240,20 @@ def listintostring(yourlist,end=" "):
     for i in yourlist:
         string1 += f"{i}{end}"
     return string1.rstrip(string1[-len(end)])
+
+def getemailaddress(text, printemails=0):
+    """This Function Finds Email Address from your given String and return the list of all founded emails
+    
+    for example: 
+        getemailaddress("abcd123@gmail.com",0)
+    Output: Hello - World
+    1=text - it is the String given by you on which the Function Applied
+    2=printemails - if 1 then print every founded email. if 0 then don't print any founded email
+    Synatx: getemailaddress(yourString --> String,printemails--> int(default value: 0))"""
+    import re
+    emailsfound = re.findall(r'[a-z.A-Z_0-9+-~]+@[a-z0-9-]+[.][a-z0-9]+',text)
+    emailslist = []
+    for email in emailsfound:
+        emailslist.append(email)
+        if(printemails == 1): print(email)
+    return emailslist
